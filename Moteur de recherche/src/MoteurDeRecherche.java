@@ -30,13 +30,13 @@ public class MoteurDeRecherche {
 	}
 
 
-		List<String> rechercher(String nom,ListePretraiter noms ,Comparateur c ,Selectionneur s) {
-			List<String> listNom = noms.list();
-			List<String> listSelection = new ArrayList<String>();
+		List<Nom> rechercher(String nom,ListePretraiter noms ,Comparateur c ,Selectionneur s) {
+			List<Nom> listNom = noms.list();
+			List<Nom> listSelection = new ArrayList<Nom>();
 		
 			for(int i=0;i<nb;i++) {
-				if(listNom.get(i).equals(nom)) {
-					listSelection.add(nom);
+				if((listNom.get(i).getNom()).equals(nom)) {
+					listSelection.add(listNom.get(i));
 				}
 			}
 			return listSelection;
