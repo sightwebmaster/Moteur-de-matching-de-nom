@@ -1,5 +1,5 @@
 import java.util.List;
 public interface Selectionneur {
-	List<String> selectionner(List<String> list);
+	List<Nom> selectionner(List<Nom> list);
 	
 }

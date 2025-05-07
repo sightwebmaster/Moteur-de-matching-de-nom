@@ -1,47 +1,41 @@
 import java.util.List;
 import java.util.ArrayList;
+
 public class MoteurDeRecherche {
-	protected String nom;
-	protected ListeDesNoms L1;
-	protected ListePretraiter L2;
-	protected ListeGeneree L3;
-	protected Selectionneur S;
-	protected Pretraiteur p;
-	protected Comparateur C;
-	protected GenerateurDeCandidat G;
+	protected Nom nom;
+	protected Selectionneur1 S;
+	protected Pretraiteur1 p;
+	protected Comparateur1 C;
+	protected Generateur1 G;
 	protected Recuperateur R;
-	private int nb;
-	
-	
-	public MoteurDeRecherche(String nom, ListeDesNoms l1, ListePretraiter l2, ListeGeneree l3,
-			 Selectionneur s, Pretraiteur p, Comparateur c, GenerateurDeCandidat g, Recuperateur r,
-			int nb) {
-		super();
-		this.nom = nom;
-		L1 = l1;
-		L2 = l2;
-		L3 = l3;
-		S = s;
+	private final double seuil;
+
+	public MoteurDeRecherche(Nom nomchercher,double seuil, Selectionneur1 s, Pretraiteur1 p, Comparateur1 c, Generateur1 g, Recuperateur r) {
+		this.nom = nomchercher;
+		this.S = s;
 		this.p = p;
-		C = c;
-		G = g;
-		R = r;
-		this.nb = nb;
+		this.C = c;
+		this.G = g;
+		this.R = r;
+		this.seuil=seuil;
 	}
 
+	public List<Nom> rechercher(Nom nomChercher) {
+		ListeDesNoms listNom = R.recuperer(); 
+		List<Nom> candidats = new ArrayList<>();
 
-		List<Nom> rechercher(String nom,ListePretraiter noms ,Comparateur c ,Selectionneur s) {
-			List<Nom> listNom = noms.list();
-			List<Nom> listSelection = new ArrayList<Nom>();
-		
-			for(int i=0;i<nb;i++) {
-				if((listNom.get(i).getNom()).equals(nom)) {
-					listSelection.add(listNom.get(i));
-				}
+		ListeGeneree couplesGeneres = G.generateur(listNom);
+		ListePretraiter couplesPretraitees = p.pretraiteur(couplesGeneres);
+
+		for (Nom nomAcomparee : couplesPretraitees.list()) {
+
+			if (C.comparer(nomAcomparee, nomChercher) >= seuil) {
+				candidats.add(nomAcomparee);
 			}
-			return listSelection;
 		
+			}
 		
-		
+
+		return S.selectionner(candidats);
 	}
 }

@@ -1,4 +1,5 @@
 
 public interface Comparateur {
-	double comparer(ListePretraiter list,String nom );
+	double comparer(Nom nom1,Nom nom2 );
+	
 }
