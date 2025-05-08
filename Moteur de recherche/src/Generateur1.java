@@ -2,7 +2,7 @@ import java.util.List;
 import java.util.ArrayList;
 public class Generateur1 implements GenerateurDeCandidat {
 
-	public ListeGeneree generateur(ListeDesNoms listdenoms) {
+	public ListeGeneree generer(ListeDesNoms listdenoms) {
 		List<Nom> listCouple=new ArrayList<>();
 		String nom;        
 		int id;

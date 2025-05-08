@@ -15,7 +15,7 @@ public class main {
      Selectionneur1 s = new Selectionneur1(); 
      Recuperateur r =new Recuperateur1();
      
-     Nom nomchercher=new Nom(1,"Ahmed");
+     Nom nomchercher=new Nom(1,"Haythem");
 
      
      MoteurDeRecherche moteur = new MoteurDeRecherche(nomchercher,0.5, s, p, c, g, r);

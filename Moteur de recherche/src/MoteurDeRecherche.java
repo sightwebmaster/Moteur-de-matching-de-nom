@@ -24,8 +24,8 @@ public class MoteurDeRecherche {
 		ListeDesNoms listNom = R.recuperer(); 
 		List<Nom> candidats = new ArrayList<>();
 
-		ListeGeneree couplesGeneres = G.generateur(listNom);
-		ListePretraiter couplesPretraitees = p.pretraiteur(couplesGeneres);
+		ListeGeneree couplesGeneres = G.generer(listNom);
+		ListePretraiter couplesPretraitees = p.pretraiter(couplesGeneres);
 
 		for (Nom nomAcomparee : couplesPretraitees.list()) {
 
