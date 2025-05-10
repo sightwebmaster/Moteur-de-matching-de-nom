@@ -1,21 +1,28 @@
 
 public class Nom {
-	private int id;
+	private final String id;
 	private String nom;
-	public Nom(int id, String nom) {
+	private String nomComposee;
+	public Nom(String id, String nom, String nomComposee) {
 		super();
 		this.id = id;
 		this.nom = nom;
+		this.nomComposee = nomComposee;
 	}
-	public int getId() {
-		return id;
-	}
-	
 	public String getNom() {
 		return nom;
 	}
 	public void setNom(String nom) {
 		this.nom = nom;
+	}
+	public String getNomComposee() {
+		return nomComposee;
+	}
+	public void setNomComposee(String nomComposee) {
+		this.nomComposee = nomComposee;
+	}
+	public String getId() {
+		return id;
 	}
 	
 	

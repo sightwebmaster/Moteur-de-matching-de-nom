@@ -1,4 +1,5 @@
 import java.util.List;
-public record ListePretraiter(List<Nom> list) {
+public record ListePretraiter(List<CoupleDeString> list) {
+	
 
 }

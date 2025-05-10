@@ -1,6 +1,6 @@
 
 public interface GenerateurDeCandidat {
-	ListeGeneree generer(ListeDesNoms list); 
+	ListeGeneree generer(ListePretraiter list1,ListePretraiter list2); 
 }
 
 

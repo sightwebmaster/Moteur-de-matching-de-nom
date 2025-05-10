@@ -1,4 +1,4 @@
 
 public interface Pretraiteur {
-	ListePretraiter pretraiter(ListeGeneree list);
+	ListePretraiter pretraiter(ListeDesNoms list);
 }

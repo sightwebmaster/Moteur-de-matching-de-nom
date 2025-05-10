@@ -1,27 +1,32 @@
 import java.util.List;
-import java.util.ArrayList;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Recuperateur1 implements Recuperateur {
 
-    
-    public ListeDesNoms recuperer() {
-        Nom nom1 = new Nom(11, "Ahmed");
-        Nom nom2 = new Nom(2, "Barhoum");
-        Nom nom3 = new Nom(3, "Haythem");
-        Nom nom4 = new Nom(4, "Ahmed");
+    private String filePath;
 
-
-        List<Nom> noms = new ArrayList<>();
-        noms.add(nom1);
-        noms.add(nom2);
-        noms.add(nom3);
-        noms.add(nom4);
-
-        return new ListeDesNoms(noms);
+    // Constructeur qui initialise le chemin du fichier CSV
+    public Recuperateur1(String filePath) {
+        this.filePath = filePath;
     }
-    
+
+    // Méthode qui lit le fichier CSV et retourne une liste d’objets ListeDesNoms
+    @Override
+    public List<CoupleDeString> recuperer() {
+        try (Stream<String> lines = Files.lines(Paths.get(filePath))) {
+            return lines
+                    .skip(1) // Ignore la première ligne (en-tête)
+                    .map(line -> line.split(",")) // Sépare chaque ligne CSV en tableau
+                    .filter(values -> values.length >= 2) // Ignore les lignes incomplètes
+                    .map(values -> new CoupleDeString(values[0].trim(), values[1].trim())) // Crée les objets ListeDesNoms
+                    .collect(Collectors.toList()); // Convertit le Stream en List (compatible Java 11)
+        } catch (IOException e) {
+            e.printStackTrace();
+            return List.of(); // Retourne une liste vide en cas d’erreur
+        }
+    }
 }
-
-	
-	
-

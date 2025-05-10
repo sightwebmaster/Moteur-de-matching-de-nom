@@ -1,5 +1,6 @@
+import java.util.List;
 
 public interface Recuperateur  {
-	ListeDesNoms recuperer();
+	List<CoupleDeString> recuperer();
 		
 }
