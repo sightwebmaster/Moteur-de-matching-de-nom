@@ -29,19 +29,19 @@ public class Main {
         p.add(new PretraiteurToLowerCase());
         Generateur1 g = new Generateur1();
         ComparateurJaro c = new ComparateurJaro(CompChaine);
-        Selectionneur1 s = new Selectionneur1();
+        Selectionneur s = new SelectionneurDesNmeilleurs(10);
         
 
         // Initialisation du moteur de recherche
-        MoteurDeRecherche moteur = new MoteurDeRecherche(listCSV, 0.7, s, p, c, g, r);
+        MoteurDeRecherche moteur = new MoteurDeRecherche(listCSV, s, p, c, g, r);
        
         
         // Recherche
-        List<String> resultats = moteur.rechercher(listAchercher);
+        List<NomAvecScore> resultats = moteur.rechercher(listAchercher);
 
         // Affichage des résultats
-        for (String resultat : resultats) {
-            System.out.println(resultat);
+        for (NomAvecScore resultat  : resultats) {
+            System.out.println("nom ="+resultat.getCouple().getNom1().getNom()+" nomcvs="+resultat.getCouple().getNom2().getNom()+"score="+resultat.getScore());
             
         }
         System.out.println(listCSV.liste().get(0));
