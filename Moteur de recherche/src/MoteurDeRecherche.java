@@ -8,12 +8,12 @@ public class MoteurDeRecherche {
 	protected Selectionneur S;
 	protected List<Pretraiteur> p;
 	protected Comparateur C;
-	protected Generateur1 G;
+	protected GenerateurDeCandidat G;
 	protected Recuperateur1 R;
 
 
 
-	public MoteurDeRecherche(ListeDesNoms listCSV, Selectionneur s, List<Pretraiteur> p, Comparateur c, Generateur1 g, Recuperateur1 r) {
+	public MoteurDeRecherche(ListeDesNoms listCSV, Selectionneur s, List<Pretraiteur> p, Comparateur c, GenerateurDeCandidat g, Recuperateur1 r) {
 		this.listCSV = listCSV;
 		this.S = s;
 		this.p = p;
@@ -28,18 +28,22 @@ public class MoteurDeRecherche {
 		ListeDesNoms listNom=new ListeDesNoms(listNomtest);
 		List<NomAvecScore> candidats = new ArrayList<>();
 		
+		
 		ListePretraiter listCSV = null;
 		ListePretraiter listAcherchee = null;
 
 		for(int i = 0; i < p.size(); i++) {
 		    listCSV = p.get(i).pretraiter(listNom);
+		    listNom =new ListeDesNoms(listCSV.list());
 		    listAcherchee = p.get(i).pretraiter(listAchercher);
+		    listAchercher=new ListeDesNoms(listAchercher.liste());
 		}
 
 		
 
 
 		ListeGeneree couplesGeneres = G.generer(listAcherchee,listCSV);
+		
 		
 
 		for (CoupleDeNom nomAcomparee : couplesGeneres.liste()) {
@@ -54,5 +58,10 @@ public class MoteurDeRecherche {
 		
 
 		return S.selectionner(candidats);
+	}
+	
+	public List<NomAvecScore> DedupliquerList(ListeDesNoms listCSV) {
+		return rechercher(listCSV);
+		
 	}
 }

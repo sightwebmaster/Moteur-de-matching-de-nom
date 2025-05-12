@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         
-        Recuperateur1 r = new Recuperateur1("peps_names_800.csv");
+        Recuperateur1 r = new Recuperateur1("peps_names_100.csv");
         List<CoupleDeString> liste = r.recuperer();
         
         
@@ -19,7 +19,7 @@ public class Main {
         
         // Liste des noms à chercher
         List<CoupleDeString> nomsAchercher = new ArrayList<>();
-        nomsAchercher.add(new CoupleDeString("NK-SZvshqfuEf7jn269Qyspv2", "victor manuel ortiz joya"));
+        nomsAchercher.add(new CoupleDeString("NK-SZvshqfuEf7jn269Qyspv2", "Mustapha Abubakar"));
 
         // Création d'un objet ListeDesNoms
         ListeDesNoms listAchercher = new ListeDesNoms(nomsAchercher);
@@ -27,9 +27,11 @@ public class Main {
         // Initialisation des autres composants
         List<Pretraiteur> p = new ArrayList<>();
         p.add(new PretraiteurToLowerCase());
-        Generateur1 g = new Generateur1();
+        p.add(new PretraiteurSansCaracteresNiChiffres());
+        p.add(new PretraiteurAvecTokenisation());
+        GenerateurDeCandidatAvecUtilisantIndex g = new GenerateurDeCandidatAvecUtilisantIndex();
         ComparateurJaro c = new ComparateurJaro(CompChaine);
-        Selectionneur s = new SelectionneurDesNmeilleurs(10);
+        Selectionneur s = new SelectionneurDesNmeilleurs(8);
         
 
         // Initialisation du moteur de recherche
@@ -38,13 +40,23 @@ public class Main {
         
         // Recherche
         List<NomAvecScore> resultats = moteur.rechercher(listAchercher);
+        
+        List<NomAvecScore> resultatsDeListeDedupliquee = moteur.rechercher(listCSV);
 
-        // Affichage des résultats
+/*        // Affichage des résultats
         for (NomAvecScore resultat  : resultats) {
             System.out.println("nom ="+resultat.getCouple().getNom1().getNom()+" nomcvs="+resultat.getCouple().getNom2().getNom()+"score="+resultat.getScore());
             
         }
-        System.out.println(listCSV.liste().get(0));
+            */
+        
+        for (NomAvecScore resultat  : resultatsDeListeDedupliquee) {
+            System.out.println("nom ="+resultat.getCouple().getNom1().getNom()+" nomcvs="+resultat.getCouple().getNom2().getNom()+"score="+resultat.getScore());
+            
+        }
+        
+        
+
     }
 }
 

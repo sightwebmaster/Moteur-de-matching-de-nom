@@ -11,5 +11,9 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="src/commons-codec-1.18.0.jar"/>
+	<classpathentry kind="lib" path="src/Models/opennlp-tools-2.5.4.jar"/>
+	<classpathentry kind="lib" path="src/en-token.bin"/>
+	<classpathentry kind="lib" path="src/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
