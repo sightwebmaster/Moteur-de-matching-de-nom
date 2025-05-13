@@ -1,28 +1,23 @@
+
 import java.util.List;
 import java.util.ArrayList;
+
+
 public class Generateur1 implements GenerateurDeCandidat {
 
-	public ListeGeneree generer(ListePretraiter list1,ListePretraiter list2) {
-		List<CoupleDeNom> listCouple=new ArrayList<>();
-		
+    public ListeGeneree generer(ListePretraiter list1, ListePretraiter list2) {
+        List<CoupleDeString> elements1 = list1.list();
+        List<CoupleDeString> elements2 = list2.list();
+        List<CoupleDeNom> listCouple = new ArrayList<>();
 
-		
-		for(int i=0;i<list1.list().size();i++) {
-			for(int j=0;j<list2.list().size();j++) {
-				String id1=list1.list().get(i).getElement1();
-				String nom1=list1.list().get(i).getElement2();
-				String id2=list2.list().get(j).getElement1();
-				String nom2=list2.list().get(j).getElement2();
-				
-				
-				Nom nomDeList1=new Nom(id1,nom1,null);
-				Nom nomDeList2=new Nom(id2,nom2,null);
-				listCouple.add(new CoupleDeNom(nomDeList1, nomDeList2));
-			}
-		}
-		
-		
-		
-		return new ListeGeneree(listCouple);
-	}
+        for (CoupleDeString e1 : elements1) {
+            for (CoupleDeString e2 : elements2) {
+                Nom nom1 = new Nom(e1.getElement1(), e1.getElement2(), null);
+                Nom nom2 = new Nom(e2.getElement1(), e2.getElement2(), null);
+                listCouple.add(new CoupleDeNom(nom1, nom2));
+            }
+        }
+
+        return new ListeGeneree(listCouple);
+    }
 }

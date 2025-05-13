@@ -13,7 +13,7 @@ public class SelectionneurParSeuil implements Selectionneur {
     public List<NomAvecScore> selectionner(List<NomAvecScore> list) {
         // Trier la liste par score décroissant
         Collections.sort(list, new ComparateurDeScore());
-        Collections.reverse(list);
+      //  Collections.reverse(list);
         
 
         // Sélectionner les éléments au-dessus du seuil

@@ -60,8 +60,15 @@ public class MoteurDeRecherche {
 		return S.selectionner(candidats);
 	}
 	
-	public List<NomAvecScore> DedupliquerList(ListeDesNoms listCSV) {
-		return rechercher(listCSV);
-		
+	public List<NomAvecScore> dedupliquerListe(ListeDesNoms listCSV) {
+	    List<NomAvecScore> resultats = new ArrayList<>();
+
+	    for (CoupleDeString couple : listCSV.liste()) {
+	        ListeDesNoms sousListe = new ListeDesNoms(List.of(couple));
+	        resultats.addAll(rechercher(sousListe));
+	    }
+
+	    return resultats;
 	}
+
 }

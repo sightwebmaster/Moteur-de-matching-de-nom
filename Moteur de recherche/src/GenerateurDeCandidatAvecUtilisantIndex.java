@@ -1,5 +1,8 @@
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,29 +32,36 @@ public class GenerateurDeCandidatAvecUtilisantIndex implements GenerateurDeCandi
 
     
     public ListeGeneree generer(ListePretraiter aChercher, ListePretraiter csv) {
-        Map<Integer, List<CoupleDeString>> index = indexer(csv);
-        List<CoupleDeNom> couples = new ArrayList<>();
+        Map<Integer, List<CoupleDeString>> index1 = indexer(aChercher);
+        Map<Integer, List<CoupleDeString>> index2 = indexer(csv);
+        Map<Integer, List<CoupleDeString>> result = new HashMap<>();
         List<CoupleDeString> candidats = new ArrayList<>();
+        List<CoupleDeNom> couples = new ArrayList<>();
 
-        for (CoupleDeString cible : aChercher.list()) {
-            String nomAChercher = cible.getElement2();
-            int taille = nomAChercher.length();
-
-            for (int cle : index.keySet()) {
-            	if(taille <= 1.5*cle) {
-            		candidats.addAll(index.get(cle));
+        
+        for(int cle1 :index1.keySet()) {
+        	result.computeIfAbsent(cle1, k -> new ArrayList<>()).addAll(index1.get(cle1));
+        	for(int cle2 : index2.keySet()) {
+        		if(cle1<=1.5*cle2) {
+        			result.computeIfAbsent(cle1, k -> new ArrayList<>()).addAll(index2.get(cle2));
+        		}
+        	}
+        	candidats.addAll(result.get(cle1));
+        	for(int i=0;i<candidats.size();i++) {
+            	for(int j=i+1;j<candidats.size();j++) {
+            		Nom nom1=new Nom(candidats.get(i).getElement1(),candidats.get(i).getElement2(),null);
+            		Nom nom2=new Nom(candidats.get(j).getElement1(),candidats.get(i).getElement2(),null);
+            		couples.add(new CoupleDeNom(nom1, nom2));
             	}
-
-                if (candidats != null) {
-                    for (CoupleDeString candidat : candidats) {
-                        Nom nom1 = new Nom(cible.getElement1(), cible.getElement2(), null);
-                        Nom nom2 = new Nom(candidat.getElement1(), candidat.getElement2(), null);
-                        couples.add(new CoupleDeNom(nom1, nom2));
-                    }
-                }
             }
+            
         }
+        
+        
+       
 
         return new ListeGeneree(couples);
     }
 }
+
+
