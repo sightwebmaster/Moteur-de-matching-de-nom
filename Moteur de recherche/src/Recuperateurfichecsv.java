@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class Recuperateur1 implements Recuperateur {
+public class Recuperateurfichecsv implements Recuperateur {
 
     private String filePath;
 
     // Constructeur qui initialise le chemin du fichier CSV
-    public Recuperateur1(String filePath) {
+    public Recuperateurfichecsv(String filePath) {
         this.filePath = filePath;
     }
 

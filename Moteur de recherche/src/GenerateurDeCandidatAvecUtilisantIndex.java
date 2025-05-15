@@ -2,7 +2,6 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,51 +10,55 @@ public class GenerateurDeCandidatAvecUtilisantIndex implements GenerateurDeCandi
 
     
     
-    public Map<Integer, List<CoupleDeString>> indexer(ListePretraiter listeNoms) {
-        Map<Integer, List<CoupleDeString>> index = new HashMap<>();
+	
 
-        for (CoupleDeString couple : listeNoms.list()) {
-            String chaine2 = couple.getElement2().trim();
-            if (chaine2.isEmpty()) continue;
+	    
+	    public Map<String, List<CoupleDeString>> indexer(ListePretraiter listeNoms) {
+	        Map<String, List<CoupleDeString>> index = new HashMap<>();
 
-            int key = chaine2.length(); // Clé = longueur en caractères
-            index.computeIfAbsent(key, k -> new ArrayList<>()).add(couple);
-        }
+	        for (CoupleDeString couple : listeNoms.list()) {
+	            String chaine = couple.getElement2().trim();
+	            if (chaine.isEmpty()) continue;
 
-        return index;
-    }
+	            String[] mots = chaine.split("\\s+"); // Séparation par espace
+	            for (String mot : mots) {
+	                index.computeIfAbsent(mot.toLowerCase(), k -> new ArrayList<>()).add(couple);
+	            }
+	        }
 
-    
-    public int extraireCle(String chaine) {
-        return chaine.trim().length(); // Retourne directement la longueur
-    }
-
+	        return index;
+	    }
     
     public ListeGeneree generer(ListePretraiter aChercher, ListePretraiter csv) {
-        Map<Integer, List<CoupleDeString>> index1 = indexer(aChercher);
-        Map<Integer, List<CoupleDeString>> index2 = indexer(csv);
-        Map<Integer, List<CoupleDeString>> result = new HashMap<>();
+        Map<String, List<CoupleDeString>> index = indexer(csv);
         List<CoupleDeString> candidats = new ArrayList<>();
         List<CoupleDeNom> couples = new ArrayList<>();
 
         
-        for(int cle1 :index1.keySet()) {
-        	result.computeIfAbsent(cle1, k -> new ArrayList<>()).addAll(index1.get(cle1));
-        	for(int cle2 : index2.keySet()) {
-        		if(cle1<=1.5*cle2) {
-        			result.computeIfAbsent(cle1, k -> new ArrayList<>()).addAll(index2.get(cle2));
+        for(CoupleDeString couple : aChercher.list()) {
+        	String key = couple.getElement2();
+        	if(index.containsKey(key)) {
+        		candidats.add(couple);
+        		index.put(key,candidats);
+        		
+        	}
+        	
+        }
+        candidats.clear();
+        System.gc(); 
+        	
+        for(String c : index.keySet()) {
+        	for(int i=0;i<index.get(c).size();i++) {
+        		for(int j=i+1;j<i;j++) {
+        			Nom nom1=new Nom(index.get(c).get(i).getElement1(),index.get(c).get(i).getElement2(),null);
+            		Nom nom2=new Nom(index.get(c).get(j).getElement1(),index.get(c).get(j).getElement2(),null);
+            		couples.add(new CoupleDeNom(nom1, nom2));
+        			
         		}
         	}
-        	candidats.addAll(result.get(cle1));
-        	for(int i=0;i<candidats.size();i++) {
-            	for(int j=i+1;j<candidats.size();j++) {
-            		Nom nom1=new Nom(candidats.get(i).getElement1(),candidats.get(i).getElement2(),null);
-            		Nom nom2=new Nom(candidats.get(j).getElement1(),candidats.get(i).getElement2(),null);
-            		couples.add(new CoupleDeNom(nom1, nom2));
-            	}
-            }
-            
-        }
+        		
+        	}
+        	
         
         
        

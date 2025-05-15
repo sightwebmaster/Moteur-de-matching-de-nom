@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class PretraiteurSansCaracteresNiChiffres implements Pretraiteur {
+public class PretraPretraiteurSansCaracteresNiChiffres implements Pretraiteur {
 
     @Override
     public ListePretraiter pretraiter(ListeDesNoms list) {
@@ -17,7 +17,7 @@ public class PretraiteurSansCaracteresNiChiffres implements Pretraiteur {
 
         return new ListePretraiter(nettoyee);
     }
-    
+
 
     private String nettoyer(String input) {
         return input.replaceAll("[^a-zA-Z\\s]", ""); // supprime tout sauf les lettres et les espaces

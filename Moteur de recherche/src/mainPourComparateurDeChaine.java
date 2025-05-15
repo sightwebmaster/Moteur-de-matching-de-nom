@@ -1,4 +1,4 @@
-/*
+
 
 public class mainPourComparateurDeChaine {
     public static void main(String[] args) {
@@ -18,4 +18,3 @@ public class mainPourComparateurDeChaine {
     	}
 }
 
-*/

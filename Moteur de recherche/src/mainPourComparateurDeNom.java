@@ -1,45 +1,44 @@
-/*
-
 import java.util.List;
 import java.util.ArrayList;
 
 public class mainPourComparateurDeNom {
 
 	public static void main(String[] args) {
-		Nom nom1=new Nom("NK-SZvshqfuEf7jn269Qyspv2", "Vazha Todua",null);
-		Nom nom2=new Nom("NK-SZvshqfuEf7jn269Qyspv2", "Vazha Todua",null);
-		
-		List<CoupleDeString> list=new ArrayList<>();
-		
-		list.add(new CoupleDeString(nom1.getId(),nom1.getNom()));
-		list.add(new CoupleDeString(nom2.getId(),nom2.getNom()));
-		
-		ListeDesNoms l=new ListeDesNoms(list);
-		
-		
-		PretraiteurToLowerCase p = new PretraiteurToLowerCase();
-		ListePretraiter l1=p.pretraiter(l);
-		
-		
-		nom1=new Nom(l1.list().get(0).getElement1(),l1.list().get(0).getElement2(),null);
-		nom2=new Nom(l1.list().get(1).getElement1(),l1.list().get(1).getElement2(),null);
-		
-		System.out.println(nom1.getId());
-		System.out.println(nom2.getId());
-		
-		System.out.println(nom1.getNom());
-		System.out.println(nom2.getNom());
+		long startTime = System.currentTimeMillis();
+
+		Recuperateurfichecsv r = new Recuperateurfichecsv("peps_names_2k.csv");
+		List<CoupleDeString> liste = r.recuperer();
+		ListeDesNoms listNom = new ListeDesNoms(liste);
+
+		Nom nomRecherche = new Nom("REF-ID", "Vazha Todua", null);
+
+		PretraiteurToLowerCase pretraiteur = new PretraiteurToLowerCase();
+		ListeDesNoms temp = new ListeDesNoms(List.of(
+				new CoupleDeString(nomRecherche.getId(), nomRecherche.getNom())
+		));
+		ListePretraiter pretraite = pretraiteur.pretraiter(temp);
+		nomRecherche = new Nom(pretraite.list().get(0).getElement1(), pretraite.list().get(0).getElement2(), null);
 
 
-		
-		ComparateurJaro c=new ComparateurJaro();
-		double score=c.comparer(nom1, nom2);
-		System.out.println(score);
+		ListePretraiter listePretraitee = pretraiteur.pretraiter(listNom);
+		List<CoupleDeString> nomsPretraite = listePretraitee.list();
+
+
+		ComparateurDeChaine comparateurChaine = new ComparateurAvecJaroWinkler();
+		Comparateur comparateurNom = new ComparateurJaro(comparateurChaine);
+
+		int i = 0;
+		for (CoupleDeString c : nomsPretraite) {
+			Nom nomActuel = new Nom(c.getElement1(), c.getElement2(), null);
+			double score = comparateurNom.comparer(nomRecherche, nomActuel);
+			System.out.printf("(%d) %s <-> %s => Score: %.4f\n", ++i, nomRecherche.getNom(), nomActuel.getNom(), score);
+		}
 
 		
+		long endTime = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("⏱️ Temps total: " + totalTime + " ms");
 
+		AnalyseMemoire.afficherMemoire("📦 Après comparaison");
 	}
-
 }
-
-*/

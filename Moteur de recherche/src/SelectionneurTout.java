@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Selectionneur1 implements Selectionneur{
+public class SelectionneurTout implements Selectionneur{
 
 	
 	public List<NomAvecScore> selectionner(List<NomAvecScore> list) {

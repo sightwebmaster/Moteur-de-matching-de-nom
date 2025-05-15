@@ -11,20 +11,16 @@ public class SelectionneurParSeuil implements Selectionneur {
 
     @Override
     public List<NomAvecScore> selectionner(List<NomAvecScore> list) {
-        // Trier la liste par score décroissant
         Collections.sort(list, new ComparateurDeScore());
-      //  Collections.reverse(list);
-        
+        Collections.reverse(list);
 
-        // Sélectionner les éléments au-dessus du seuil
-        for (int i=0;i<list.size();i++) {
-            if (list.get(i).getScore() >= seuil) {
-                return list.subList(0, i);
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getScore() < seuil) {
+                return list.subList(0, i); 
             }
         }
-		return null;
 
-        
+        return new ArrayList<>(list);
     }
 
     public double getSeuil() {

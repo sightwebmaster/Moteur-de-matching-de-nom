@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="src/Models/opennlp-tools-2.5.4.jar"/>
 	<classpathentry kind="lib" path="src/en-token.bin"/>
 	<classpathentry kind="lib" path="src/opennlp-en-ud-ewt-tokens-1.2-2.5.0.bin"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,36 +1,28 @@
-/*
 import java.util.List;
 import java.util.ArrayList;
 
 public class mainDePretraiteur {
 
     public static void main(String[] args) {
-        // Création d'une liste de CoupleDeString
-        List<CoupleDeString> noms = new ArrayList<>();
-        noms.add(new CoupleDeString("NK-SZvshqfuEf7jn269Qyspv2", "Vazha To!$ùdua"));
-        noms.add(new CoupleDeString("NK-SZvshqfuEf7jn269Qyspv2", "Ahmed Ben47 Chaaben"));
-        noms.add(new CoupleDeString("NK-SZvshqfuEf7jn269Qyspv2", "Hmed 2 Ben Chaa47ben hello world"));
+        Recuperateurfichecsv r = new Recuperateurfichecsv("peps_names_2k.csv");
+        List<CoupleDeString> liste1 = r.recuperer();
 
+        ListeDesNoms liste = new ListeDesNoms(liste1);
 
+        List<Pretraiteur> p = new ArrayList<>();
+        p.add(new PretraiteurToLowerCase());
+        p.add(new PretraPretraiteurSansCaracteresNiChiffres());
+        p.add(new PretraiteurAvecTokenisation());
 
-        // Création d'un objet ListeDesNoms
-        ListeDesNoms liste = new ListeDesNoms(noms);
+        ListePretraiter listCSV = null;
+        for (Pretraiteur pretraiteur : p) {
+            listCSV = pretraiteur.pretraiter(liste); 
+            liste = new ListeDesNoms(listCSV.list()); 
+        }
 
-        // Application du prétraiteur
-        Pretraiteur p = new PretraiteurAvecTokenisation();
-        Pretraiteur p1 = new PretraiteurSansCaracteresNiChiffres();
-        Pretraiteur p2 = new PretraiteurMetaphonique();
-
-        
-
-        ListePretraiter resultat = p1.pretraiter(liste);
-        
-
-        // Affichage des résultats
-        for (CoupleDeString c : resultat.list()) {
-            System.out.println(c.getElement2() );
+        System.out.println("Résultat après tous les prétraitements :");
+        for (CoupleDeString c : listCSV.list()) {
+            System.out.println(c.getElement1() + " | " + c.getElement2());
         }
     }
 }
-
-*/
